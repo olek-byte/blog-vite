@@ -1,0 +1,123 @@
+.modal {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    width: 50%;
+    z-index: 10001;
+
+    display: block;
+    margin: 0 auto;
+    padding: 40px 40px 30px 40px;
+
+    min-width: 320px;
+    max-width: 520px;
+    width: 100%;
+
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+
+    transform: translateY(-50%);
+    transition: opacity 500ms ease-in;
+
+    border: var(--modal-box-border);
+    border-radius: 5px;
+    background-color: var(--modal-box-bcg);
+    background-clip: padding-box;
+    box-shadow: var(--modal-box-shadow);
+
+    &__form {
+        position: relative;
+    }
+
+    &__close {
+        position: absolute;
+        right: -34px;
+        top: -34px;
+        padding: 16px;
+
+        @extend %flexCenter;
+        width: 22px;
+        height: 22px;
+
+        font-weight: 700;
+        color: var(--white-color);
+
+        border-radius: 50%;
+        transition: background-color 100ms;
+    }
+
+    &__close:hover {
+        background-color: var(--modal-window-close-btn);
+    }
+
+    &__img,
+    &__title,
+    &__descr {
+        display: block;
+        margin-bottom: 20px;
+        padding: 0 20px;
+
+        font-size: 18px;
+        border-radius: 4px;
+
+        color: var(--white-color);
+        background-clip: padding-box;
+        background-color: var(--modal-input-bcg);
+        border: var(--modal-input-border);
+    }
+
+    &__img:focus,
+    &__title:focus,
+    &__descr:focus {
+        overflow: hidden;
+        background-color: var(--modal-input-focus-bcg);
+        box-shadow: var(--modal-input-focus-shadow);
+    }
+
+    &__img::placeholder,
+    &__title::placeholder,
+    &__descr::placeholder {
+        color: var(--white-color);
+    }
+
+    &__img,
+    &__title,
+    &__descr {
+        width: 100%;
+        height: 48px;
+    }
+
+    &__btn {
+        display: inline-block;
+        padding: 10px 40px;
+
+        text-transform: uppercase;
+        font-weight: 700;
+
+        border-radius: 4px;
+        border: var(--border-line);
+
+        background-color: var(--modal-btn-bcg);
+        box-shadow: var(--modal-btn-shadow);
+        color: var(--modal-btn-text);
+        cursor: pointer;
+
+        transition: all 200ms;
+    }
+
+    &__btn:not(:last-child) {
+        margin-right: 20px;
+    }
+
+    &__btn:hover {
+        color: var(--black-color);
+        background-color: var(--modal-btn-hover-bcg);
+    }
+
+    &__btn:active {
+        color: var(--white-color);
+        background-color: var(--grey-color);
+    }
+}

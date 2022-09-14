@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>start html</title>
+    <link rel="stylesheet" href="scss/style.scss">
+</head>
+
+<body class="body">
+
+    <a class="overlay" id="form1" href="#"></a>
+
+    <header class="header">
+        <div class="container">
+            <nav class="header__nav">
+                <ul class="header__list">
+                    <li class="header__item">
+                        <a href="#" class="logo__link">
+                            <img src="https://static-cse.canva.com/blob/584210/Nasa.jpg" alt="Logo" class="logo__img">
+                        </a>
+                    </li>
+                    <li class="header__item">
+                        <button href="#form1" class="header__btn btn-modal">Add Post</button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="main">
+
+        <section class="blog">
+            <div class="container">
+                <div class="blog__inner">
+
+                    <article class="blog-card">
+                        <div class="blog-card__inner">
+                            <a href="#" class="blog-card__link">
+                                <img src="https://st2.depositphotos.com/1471096/7466/i/600/depositphotos_74661735-stock-photo-angry-wolf-head.jpg"
+                                    alt="blog-image" class="blog-card__img">
+                                <div class="blog-card__content">
+                                    <span class="blog-card__title">Title of the post</span>
+                                    <p class="blog-card__descr">Short description</p>
+                                </div>
+                            </a>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <ul class="footer__list">
+                <li class="footer__item">
+                    <a href="#" class="logo__link">
+                        <img src="https://static-cse.canva.com/blob/584210/Nasa.jpg" alt="Logo" class="logo__img">
+                    </a>
+                </li>
+                <li class="footer__item">
+                    <p class="footer__rights">
+                        © All rights reserved
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </footer>
+
+    <div class="modal">
+        <form class="modal__form">
+            <button class="modal__close">X</button>
+            <label class="modal__label">
+                <input class="modal__title" name="title" placeholder="Title:" type="text" required>
+            </label>
+            <label class="modal__label">
+                <input class="modal__descr" name="description" placeholder="Description:" type="text" required>
+            </label>
+            <label class="modal__label">
+                <input class="modal__img" name="image" placeholder="Image url:" type="text" required>
+            </label>
+            <button class="modal__btn" type="submit">To add</button>
+            <button class="modal__btn" type="submit">Update</button>
+        </form>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+
+</body>
+
+</html>

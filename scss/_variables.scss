@@ -1,0 +1,47 @@
+:root {
+    --black-color: #000000;
+    --white-color: #ffffff;
+    --blue-color: #0000ff;
+    --border-line: 1px solid #808080;
+    --overlay-bgc: rgba(0, 0, 0, 0.8);
+    --grey-color: #808080;
+    --blog-card-hover-shadow: 0 6px 47px 3px rgb(37 37 37 / 50%);
+    --modal-box-border: 1px solid rgba(120, 120, 120, 0.7);
+    --modal-box-bcg: rgba(60, 63, 65, 0.9);
+    --modal-box-shadow: 0 0 13px 3px rgba(0, 0, 0, 0.5);
+    --modal-input-border: 1px solid rgba(255, 255, 255, 0.6);
+    --modal-input-bcg: rgba(255, 255, 255, 0.4);
+    --modal-input-focus-bcg: rgba(0, 0, 0, 0.2);
+    --modal-input-focus-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.5);
+    --modal-window-close-btn: #ff0000;
+    --modal-btn-bcg: #007273;
+    --modal-btn-shadow: rgba(255, 255, 255, 0.1) 0 1px 0,
+        inset rgba(255, 255, 255, 0.7) 0 1px 0;
+    --modal-btn-text: #e1e1e1;
+    --modal-btn-hover-bcg: #008b8b;
+}
+
+%headerFooterFlex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+%flexColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+%flexCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+%flexWrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+// @extend %flexWrap;

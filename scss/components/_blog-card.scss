@@ -1,0 +1,29 @@
+.blog-card {
+    margin: 15px;
+
+    &__link {
+        @extend %flexColumn;
+        transition: all 500ms;
+    }
+
+    &__link:hover {
+        color: var(--white-color);
+        background-color: var(--grey-color);
+        box-shadow: var(--blog-card-hover-shadow);
+    }
+
+    &__img {
+        max-width: 240px;
+    }
+
+    &__title {
+        margin-bottom: 10px;
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--red-color);
+    }
+
+    &__content {
+        padding: 20px 10px;
+    }
+}
