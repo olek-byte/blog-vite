@@ -1,31 +1,44 @@
 .modal {
-    position: absolute;
-    top: 50%;
-    right: 0;
+    position: fixed;
+    top: 0;
     left: 0;
-    width: 50%;
-    z-index: 10001;
-
-    display: block;
-    margin: 0 auto;
-    padding: 40px 40px 30px 40px;
-
-    min-width: 320px;
-    max-width: 520px;
     width: 100%;
-
-    opacity: 0;
+    height: 100%;
+    // visibility: hidden; //changing this property in JS
     visibility: hidden;
-    overflow: hidden;
+    // overflow-x: hidden;
+    background-color: rgba(0, 0, 0, 0.4);
+    // cursor: pointer;
 
-    transform: translateY(-50%);
-    transition: opacity 500ms ease-in;
+    &__inner {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        left: 0;
+        width: 50%;
+        z-index: 10001;
 
-    border: var(--modal-box-border);
-    border-radius: 5px;
-    background-color: var(--modal-box-bcg);
-    background-clip: padding-box;
-    box-shadow: var(--modal-box-shadow);
+        display: block;
+        margin: 0 auto;
+        padding: 40px 40px 30px 40px;
+
+        min-width: 320px;
+        max-width: 520px;
+
+        // opacity: 0; //changing this property in JS
+        opacity: 1;
+
+        transform: translateY(-50%);
+        transition: opacity 500ms ease-in;
+
+        border: var(--modal-box-border);
+        border-radius: 5px;
+        background-color: var(--modal-box-bcg);
+        background-clip: padding-box;
+        box-shadow: var(--modal-box-shadow);
+        // cursor: auto;
+        // pointer-events: none;
+    }
 
     &__form {
         position: relative;
@@ -45,7 +58,7 @@
         color: var(--white-color);
 
         border-radius: 50%;
-        transition: background-color 100ms;
+        // transition: background-color 100ms;
     }
 
     &__close:hover {
@@ -104,7 +117,7 @@
         color: var(--modal-btn-text);
         cursor: pointer;
 
-        transition: all 200ms;
+        // transition: all 200ms;
     }
 
     &__btn:not(:last-child) {
@@ -120,4 +133,12 @@
         color: var(--white-color);
         background-color: var(--grey-color);
     }
+
+    &__update {
+        visibility: hidden;
+    }
+}
+
+.update-post-btn {
+    display: none;
 }

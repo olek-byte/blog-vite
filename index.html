@@ -10,7 +10,9 @@
 
 <body class="body">
 
-    <a class="overlay" id="form1" href="#"></a>
+    <div class="preloader" id="preloader">
+        <div class="lds-dual-ring"></div>
+    </div>
 
     <header class="header">
         <div class="container">
@@ -22,7 +24,8 @@
                         </a>
                     </li>
                     <li class="header__item">
-                        <button href="#form1" class="header__btn btn-modal">Add Post</button>
+                        <button href="#form1" class="header__btn add-post-btn">Add
+                            Post</button>
                     </li>
                 </ul>
             </nav>
@@ -32,9 +35,9 @@
 
         <section class="blog">
             <div class="container">
-                <div class="blog__inner">
+                <div class="blog__inner posts__list">
 
-                    <article class="blog-card">
+                    <!-- <article class="blog-card">
                         <div class="blog-card__inner">
                             <a href="#" class="blog-card__link">
                                 <img src="https://st2.depositphotos.com/1471096/7466/i/600/depositphotos_74661735-stock-photo-angry-wolf-head.jpg"
@@ -45,7 +48,7 @@
                                 </div>
                             </a>
                         </div>
-                    </article>
+                    </article> -->
 
                 </div>
             </div>
@@ -71,20 +74,22 @@
     </footer>
 
     <div class="modal">
-        <form class="modal__form">
-            <button class="modal__close">X</button>
-            <label class="modal__label">
-                <input class="modal__title" name="title" placeholder="Title:" type="text" required>
-            </label>
-            <label class="modal__label">
-                <input class="modal__descr" name="description" placeholder="Description:" type="text" required>
-            </label>
-            <label class="modal__label">
-                <input class="modal__img" name="image" placeholder="Image url:" type="text" required>
-            </label>
-            <button class="modal__btn" type="submit">To add</button>
-            <button class="modal__btn" type="submit">Update</button>
-        </form>
+        <div class="modal__inner">
+            <form class="modal__form new-post" id="form">
+                <button class="modal__close">X</button>
+                <label class="modal__label">
+                    <input class="modal__title new-post__title" name="title" placeholder="Title:" type="text">
+                    <span class="title-error"></span>
+                </label>
+                <label class="modal__label">
+                    <input class="modal__descr new-post__body" name="description" placeholder="Description:"
+                        type="text">
+                </label>
+
+                <button class="modal__btn create-post-btn">Create</button>
+                <button class="modal__btn update-post-btn">Update</button>
+            </form>
+        </div>
     </div>
 
     <script type="module" src="js/main.js"></script>

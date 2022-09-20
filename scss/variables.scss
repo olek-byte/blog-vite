@@ -38,10 +38,12 @@
     justify-content: center;
 }
 
-%flexWrap {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+%text-hiding {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
+
+
 
 // @extend %flexWrap;
