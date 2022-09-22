@@ -12,7 +12,6 @@ const postBodyInput = document.querySelector('.new-post__body');
 const createPostBtn = document.querySelector('.create-post-btn');
 const updatePostBtn = document.querySelector('.update-post-btn');
 
-
 const state = {
     posts: [],
     newPost: {
@@ -32,38 +31,33 @@ const cleanData = () => {
     state.editPost = {};
 }
 
-//PUT
-const editPost = (index) => {
-    const editeblePost = state.posts[index];
-    state.editPost = editeblePost;
+const editPost = (postId) => {
+    const selectedPost = state.posts.filter((currentPost) => currentPost.id === postId);
+    console.log(selectedPost);
+    state.editPost = Object.assign(selectedPost[0], state.editPost);
+    console.log(state.editPost);
+    postTitleInput.value = selectedPost[0].title;
+    postBodyInput.value = selectedPost[0].body;
 
-    postTitleInput.value = state.editPost.title;
-    postBodyInput.value = state.editPost.body;
-
-    console.log('HELLLO');
-
-    const openModalWIndow = () => {
+    const openModalWindow = () => {
         modalWindow.style.visibility = 'visible';
         modalInner.style.opacity = '1';
     }
-    // modalWindow.style.visibility = 'visible';
-    // modalInner.style.opacity = '1';
     createPostBtn.style.display = 'none';
     updatePostBtn.style.display = 'inline-block';
-    return openModalWIndow();
+    return openModalWindow();
 }
 
-
-const deletePost = (index) => {
-    const editeblePost = state.posts[index];
-    removePostRequest(editeblePost.id);
-    state.posts.splice(index, 1);
+const deletePost = (postId) => {
+    const selectedPost = state.posts.filter((currentPost) => currentPost.id === postId);
+    state.editPost = selectedPost[0];
+    console.log(state.editPost.id);
+    removePostRequest(state.editPost.id);
+    state.posts.splice(state.editPost.id, 1);
     fillPostsList(state.posts);
 }
 
-
-
-const createPost = (post, index) => `
+const createPost = (post) => `
     <article class="blog-card post">
         <div class="blog-card__inner post__wrapper">
             <img src="https://st2.depositphotos.com/1471096/7466/i/600/depositphotos_74661735-stock-photo-angry-wolf-head.jpg" alt="blog-image" class="blog-card__img">
@@ -72,8 +66,8 @@ const createPost = (post, index) => `
                 <p class="blog-card__descr">${post.body}</p> 
 
                 <div class="post__buttons">
-                    <button class="buttons__edit" onclick="editPost(${index})">Edit</button>  
-                    <button class="buttons__delete" onclick="deletePost(${index})">Delete</button> 
+                    <button class="buttons__edit" data-id="${post.id}">Edit</button>  
+                    <button class="buttons__delete" data-id="${post.id}">Delete</button> 
                 </div> 
             </div> 
 
@@ -91,47 +85,56 @@ const fillPostsList = (posts) => {
     }
 }
 
-
-
 postTitleInput.addEventListener('change', (e) => {
     if (!!state.editPost.title) {
         if (postTitleInput.value !== '') {
-            postTitleInput.classList.remove('error');
             return state.editPost.title = e.target.value;
-        } else {
-            postTitleInput.classList.add('error');
         }
     }
     return state.newPost.title = e.target.value;
 });
 
 postBodyInput.addEventListener('change', (e) => {
-    if (!!state.editPost.title) {
+    if (!!state.editPost.body) {
         if (postBodyInput.value !== '') {
-            postBodyInput.classList.remove('error');
             return state.editPost.body = e.target.value;
-        } else {
-            postBodyInput.classList.add('error');
         }
     }
     return state.newPost.body = e.target.value;
 });
 
 updatePostBtn.addEventListener('click', async () => {
-    console.log("jjjj");
-    if (!!state.editPost.title || !!state.editPost.body) {
-        if (postTitleInput.value !== '' && postBodyInput.value !== '') {
-            await updatePostRequest();
-            // cleanData();
-            fillPostsList(state.posts);
-            modalWindow.style.visibility = 'hidden';
-        }
+    console.log("update-btn clicking");
+
+    if (postTitleInput.value === '') {
+        postTitleInput.classList.add('error');
     }
+
+    if (postBodyInput.value === '') {
+        postBodyInput.classList.add('error');
+    }
+
+    if (postTitleInput.value !== '') {
+        postTitleInput.classList.remove('error');
+    }
+
+    if (postBodyInput.value !== '') {
+        postBodyInput.classList.remove('error');
+    }
+
+    if (postTitleInput.value !== '' && postBodyInput.value !== '') {
+        modalWindow.style.visibility = 'hidden';
+        await updatePostRequest();
+
+        cleanData();
+
+    }
+    fillPostsList(state.posts);
+
+
 })
 
-
 createPostBtn.addEventListener('click', async () => {
-
     if (postTitleInput.value === '') {
         postTitleInput.classList.add('error');
     }
@@ -156,10 +159,45 @@ createPostBtn.addEventListener('click', async () => {
     fillPostsList(state.posts);
 })
 
-
 document.addEventListener('DOMContentLoaded', async () => {
     await getPostsRequest();
     fillPostsList(state.posts);
+
+    const editBtns = document.querySelectorAll('.buttons__edit');
+    editBtns.forEach(elem => {
+        elem.addEventListener('click', (e) => {
+            const postId = Number(e.target.getAttribute('data-id'));
+            if (!postId) {
+                return;
+            }
+            editPost(postId);
+        })
+    })
+
+    const deleteBtns = document.querySelectorAll('.buttons__delete');
+    const delModal = document.querySelector('.modal-delete');
+
+    deleteBtns.forEach(elem => {
+        elem.addEventListener('click', (e) => {
+            console.log('Hello world!!!');
+            delModal.style.visibility = 'visible';
+
+            const postId = Number(e.target.getAttribute('data-id'));
+            const agreeBtn = document.querySelector('.modal-delete__agree');
+            const disAgreeBtn = document.querySelector('.modal-delete__disagree');
+
+            agreeBtn.addEventListener('click', () => {
+                console.log('Yes');
+                deletePost(postId);
+                delModal.style.visibility = 'hidden';
+            })
+
+            disAgreeBtn.addEventListener('click', () => {
+                console.log('No');
+                delModal.style.visibility = 'hidden';
+            })
+        })
+    })
 })
 
 const getPostsRequest = () => {
@@ -186,8 +224,10 @@ const createPostRequest = () => {
 }
 
 const updatePostRequest = () => {
+    // console.log(state.editPost);
+    // return;
     return fetch(`https://jsonplaceholder.typicode.com/posts/${state.editPost.id}`, {
-            method: 'PUT',
+            method: 'PATCH',
             body: JSON.stringify(state.editPost),
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
@@ -196,7 +236,6 @@ const updatePostRequest = () => {
         .then((res) => res.json())
         .then((data) => data)
 }
-
 
 const removePostRequest = (id) => {
     return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {

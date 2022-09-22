@@ -119,3 +119,25 @@ body {
         transform: rotate(360deg);
     }
 }
+
+.update-post-btn {
+    display: none;
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.display-none {
+    display: none;
+}
+
+.display-inline-block {
+    display: inline-block;
+}

@@ -7,18 +7,16 @@ export const modalModule = (() => {
     const createPostBtn = document.querySelector('.create-post-btn');
     const updatePostBtn = document.querySelector('.update-post-btn');
 
-
     const eventHandler = () => {
-
         // Modal opening
         addPostBtn.addEventListener('click', (e) => {
             e.preventDefault();
             const openModalWIndow = () => {
-                modalWindow.style.visibility = 'visible';
+                modalWindow.classList.add('visible');
                 modalInner.style.opacity = '1';
             }
-            updatePostBtn.style.display = 'none';
-            createPostBtn.style.display = 'inline-block';
+            updatePostBtn.classList.add('display-none');
+            createPostBtn.classList.add('display-inline-block');
             return openModalWIndow();
         })
 
@@ -26,15 +24,19 @@ export const modalModule = (() => {
             e.preventDefault();
         })
 
+        updatePostBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+        })
+
         //PRELOADER
         window.onload = () => {
-            preloader.style.display = 'none';
+            preloader.classList.add('display-none');
         }
 
         //Modal window Close Esc 
         document.onkeydown = (e) => {
             if (e.keyCode === 27) {
-                modalWindow.style.visibility = 'hidden';
+                modalWindow.classList.add('hidden');
             }
         }
 
@@ -43,8 +45,8 @@ export const modalModule = (() => {
             e.preventDefault();
 
             const closeModalWIndow = () => {
-                modalWindow.style.visibility = 'hidden';
-                modalInner.style.opacity = '0';
+                modalWindow.classList.add('hidden');
+                modalInner.classList.add('hidden');
             }
             return closeModalWIndow();
         })
