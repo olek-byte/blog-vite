@@ -68,22 +68,12 @@ const editPost = postId => {
   state.editPost = Object.assign(selectedPost[0], state.editPost);
   postTitleInput.value = selectedPost[0].title;
   postBodyInput.value = selectedPost[0].body;
-
-  const openModalWindow = () => {
-    modalWindow.style.visibility = 'visible';
-    modalInner.style.opacity = '1';
-  };
-
-  createPostBtn.style.display = 'none';
-  updatePostBtn.style.display = 'inline-block';
-  return openModalWindow();
 };
 
-const removePostRequest = id => {
+const removePostRequest = id =>
   fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
     method: 'DELETE',
   });
-};
 
 const deletePost = postId => {
   const selectedPost = state.posts.filter(
@@ -96,24 +86,22 @@ const deletePost = postId => {
 };
 
 postTitleInput.addEventListener('change', e => {
-  if (!state.editPost.title) {
-    if (postTitleInput.value !== '') {
-      state.editPost.title = e.target.value;
-    }
+  if (postTitleInput.value !== '') {
+    state.editPost.title = e.target.value;
   }
+
   state.newPost.title = e.target.value;
 });
 
 postBodyInput.addEventListener('change', e => {
-  if (!state.editPost.body) {
-    if (postBodyInput.value !== '') {
-      state.editPost.body = e.target.value;
-    }
+  if (postBodyInput.value !== '') {
+    state.editPost.body = e.target.value;
   }
+
   state.newPost.body = e.target.value;
 });
 
-const createPostRequest = () => {
+const createPostRequest = () =>
   fetch('https://jsonplaceholder.typicode.com/posts', {
     method: 'POST',
     body: JSON.stringify(state.newPost),
@@ -123,7 +111,6 @@ const createPostRequest = () => {
   })
     .then(res => res.json())
     .then(post => state.posts.push(post));
-};
 
 createPostBtn.addEventListener('click', async () => {
   if (postTitleInput.value === '') {
@@ -143,14 +130,18 @@ createPostBtn.addEventListener('click', async () => {
   }
 
   if (postTitleInput.value !== '' && postBodyInput.value !== '') {
-    modalWindow.style.visibility = 'hidden';
+    modalWindow.classList.remove('visible');
+    modalInner.classList.remove('visible');
+    updatePostBtn.classList.remove('display-none');
+    createPostBtn.classList.remove('display-inline-block');
     await createPostRequest();
     cleanData();
   }
+
   fillPostsList(state.posts);
 });
 
-const updatePostRequest = () => {
+const updatePostRequest = () =>
   // console.log(state.editPost);
   // return;
   fetch(`https://jsonplaceholder.typicode.com/posts/${state.editPost.id}`, {
@@ -162,7 +153,6 @@ const updatePostRequest = () => {
   })
     .then(res => res.json())
     .then(data => data);
-};
 
 updatePostBtn.addEventListener('click', async () => {
   //   console.log('update-btn clicking');
@@ -184,15 +174,18 @@ updatePostBtn.addEventListener('click', async () => {
   }
 
   if (postTitleInput.value !== '' && postBodyInput.value !== '') {
-    modalWindow.style.visibility = 'hidden';
     await updatePostRequest();
-
     cleanData();
+    modalWindow.classList.remove('visible');
+    modalInner.classList.remove('visible');
+    updatePostBtn.classList.remove('display-none');
+    createPostBtn.classList.remove('display-inline-block');
   }
+
   fillPostsList(state.posts);
 });
 
-const getPostsRequest = () => {
+const getPostsRequest = () =>
   fetch('https://jsonplaceholder.typicode.com/posts?_limit=4', {
     method: 'GET',
     headers: {
@@ -203,7 +196,6 @@ const getPostsRequest = () => {
     .then(posts => {
       state.posts = state.posts.concat(posts);
     });
-};
 
 document.addEventListener('DOMContentLoaded', async () => {
   await getPostsRequest();
@@ -216,6 +208,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!postId) {
         return;
       }
+      const openModalWindow = () => {
+        modalWindow.classList.add('visible');
+        modalInner.classList.add('visible');
+        updatePostBtn.classList.add('display-inline-block');
+        createPostBtn.classList.add('display-none');
+      };
+      openModalWindow();
+
       editPost(postId);
     });
   });
@@ -225,22 +225,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   deleteBtns.forEach(elem => {
     elem.addEventListener('click', e => {
-      //   console.log('Hello world!!!');
-      delModal.style.visibility = 'visible';
+      delModal.classList.add('visible');
 
       const postId = Number(e.target.getAttribute('data-id'));
       const agreeBtn = document.querySelector('.modal-delete__agree');
       const disAgreeBtn = document.querySelector('.modal-delete__disagree');
 
       agreeBtn.addEventListener('click', () => {
-        // console.log('Yes');
         deletePost(postId);
-        delModal.style.visibility = 'hidden';
+        delModal.classList.remove('visible');
       });
 
       disAgreeBtn.addEventListener('click', () => {
-        // console.log('No');
-        delModal.style.visibility = 'hidden';
+        delModal.classList.remove('visible');
       });
     });
   });
