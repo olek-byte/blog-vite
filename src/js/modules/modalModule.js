@@ -33,7 +33,7 @@ export const modalModule = (() => {
             preloader.classList.add('display-none');
         }
 
-        //Modal window Close Esc 
+        //Modal window Close Esc
         document.onkeydown = (e) => {
             if (e.keyCode === 27) {
                 modalWindow.classList.add('hidden');
