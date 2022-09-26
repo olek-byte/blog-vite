@@ -1,43 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog</title>
+    <link rel="stylesheet" href="src/scss/style.scss" />
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>start html</title>
-    <link rel="stylesheet" href="src/scss/style.scss">
-</head>
-
-<body class="body">
-
+  <body class="body">
     <div class="preloader" id="preloader">
-        <div class="lds-dual-ring"></div>
+      <div class="lds-dual-ring"></div>
     </div>
 
     <header class="header">
-        <div class="container">
-            <nav class="header__nav">
-                <ul class="header__list">
-                    <li class="header__item">
-                        <a href="#" class="logo__link">
-                            <img src="https://static-cse.canva.com/blob/584210/Nasa.jpg" alt="Logo" class="logo__img">
-                        </a>
-                    </li>
-                    <li class="header__item">
-                        <button href="#form1" class="header__btn add-post-btn">Add
-                            Post</button>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+      <div class="container">
+        <nav class="header__nav">
+          <ul class="header__list">
+            <li class="header__item">
+              <a href="#" class="logo__link">
+                <img
+                  src="https://static-cse.canva.com/blob/584210/Nasa.jpg"
+                  alt="Logo"
+                  class="logo__img"
+                />
+              </a>
+            </li>
+            <li class="header__item">
+              <button class="header__btn add-post-btn">Add Post</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </header>
     <main class="main">
-
-        <section class="blog">
-            <div class="container">
-                <div class="blog__inner posts__list">
-
-                    <!-- <article class="blog-card">
+      <section class="blog">
+        <div class="container">
+          <div class="blog__inner posts__list">
+            <!-- <article class="blog-card">
                         <div class="blog-card__inner">
                             <a href="#" class="blog-card__link">
                                 <img src="https://st2.depositphotos.com/1471096/7466/i/600/depositphotos_74661735-stock-photo-angry-wolf-head.jpg"
@@ -49,60 +48,67 @@
                             </a>
                         </div>
                     </article> -->
-
-                </div>
-            </div>
-        </section>
-
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
-        <div class="container">
-            <ul class="footer__list">
-                <li class="footer__item">
-                    <a href="#" class="logo__link">
-                        <img src="https://static-cse.canva.com/blob/584210/Nasa.jpg" alt="Logo" class="logo__img">
-                    </a>
-                </li>
-                <li class="footer__item">
-                    <p class="footer__rights">
-                        © All rights reserved
-                    </p>
-                </li>
-            </ul>
-        </div>
+      <div class="container">
+        <ul class="footer__list">
+          <li class="footer__item">
+            <a href="#" class="logo__link">
+              <img
+                src="https://static-cse.canva.com/blob/584210/Nasa.jpg"
+                alt="Logo"
+                class="logo__img"
+              />
+            </a>
+          </li>
+          <li class="footer__item">
+            <p class="footer__rights">© All rights reserved</p>
+          </li>
+        </ul>
+      </div>
     </footer>
 
     <div class="modal">
-        <div class="modal__inner">
-            <form class="modal__form new-post" id="form">
-                <button class="modal__close">X</button>
-                <label class="modal__label">
-                    <input class="modal__title new-post__title" name="title" placeholder="Title:" type="text">
-                </label>
-                <label class="modal__label">
-                    <input class="modal__descr new-post__body" name="description" placeholder="Description:"
-                        type="text">
-                </label>
+      <div class="modal__inner">
+        <form class="modal__form new-post" id="form">
+          <button class="modal__close">X</button>
+          <label class="modal__label">
+            <input
+              class="modal__title new-post__title"
+              name="title"
+              placeholder="Title:"
+              type="text"
+            />
+          </label>
+          <label class="modal__label">
+            <input
+              class="modal__descr new-post__body"
+              name="description"
+              placeholder="Description:"
+              type="text"
+            />
+          </label>
 
-                <button class="modal__btn create-post-btn">Create</button>
-                <button class="modal__btn update-post-btn">Update</button>
-            </form>
-        </div>
+          <button class="modal__btn create-post-btn">Create</button>
+          <button class="modal__btn update-post-btn">Update</button>
+        </form>
+      </div>
     </div>
 
-
-
     <div class="modal-delete modal">
-        <div class="modal-delete__inner modal__inner">
-            <p class="modal-delete__text">Are you sure, you want to delete this post?</p>
-            <button class="modal-delete__agree">Yes</button>
-            <button class="modal-delete__disagree">No</button>
-        </div>
+      <div class="modal-delete__inner modal__inner">
+        <p class="modal-delete__text">
+          Are you sure, you want to delete this post?
+        </p>
+        <button class="modal-delete__agree">Yes</button>
+        <button class="modal-delete__disagree">No</button>
+      </div>
     </div>
 
     <script type="module" src="src/js/main.js"></script>
-
-</body>
-
+  </body>
 </html>
