@@ -16,6 +16,7 @@ export const modalModule = (() => {
         modalWindow.classList.add('visible');
         modalInner.classList.add('visible');
       };
+
       updatePostBtn.classList.add('display-none');
       createPostBtn.classList.add('display-inline-block');
       openModalWIndow();
@@ -37,7 +38,10 @@ export const modalModule = (() => {
     // Modal window Close Esc
     document.onkeydown = e => {
       if (e.keyCode === 27) {
-        modalWindow.classList.add('hidden');
+        modalWindow.classList.remove('visible');
+        modalInner.classList.remove('visible');
+        updatePostBtn.classList.remove('display-none');
+        createPostBtn.classList.remove('display-inline-block');
       }
     };
 
@@ -46,10 +50,12 @@ export const modalModule = (() => {
       e.preventDefault();
 
       const closeModalWIndow = () => {
-        modalWindow.classList.add('hidden');
-        modalInner.classList.add('hidden');
+        modalWindow.classList.remove('visible');
+        modalInner.classList.remove('visible');
+        updatePostBtn.classList.remove('display-none');
+        createPostBtn.classList.remove('display-inline-block');
       };
-      return closeModalWIndow();
+      closeModalWIndow();
     });
   };
 
