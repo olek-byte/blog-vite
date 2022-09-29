@@ -1,9 +1,13 @@
 import { modalModule } from './modules/modalModule';
+import {
+  removePostRequest,
+  updatePostRequest,
+  createPostRequest,
+  getPostsRequest,
+} from './api/posts';
 
 modalModule.init();
 
-const modalWindow = document.querySelector('.modal');
-const modalInner = document.querySelector('.modal__inner');
 const postsList = document.querySelector('.posts__list');
 
 const postTitleInput = document.querySelector('.new-post__title');
@@ -11,6 +15,11 @@ const postBodyInput = document.querySelector('.new-post__body');
 
 const createPostBtn = document.querySelector('.create-post-btn');
 const updatePostBtn = document.querySelector('.update-post-btn');
+
+const main = document.querySelector('.main');
+const delModal = document.querySelector('.modal-delete');
+const agreeBtn = document.querySelector('.modal-delete__agree');
+const disAgreeBtn = document.querySelector('.modal-delete__disagree');
 
 const state = {
   posts: [],
@@ -50,7 +59,6 @@ const createPost = post => `
 `;
 
 const fillPostsList = posts => {
-  const main = document.querySelector('.main');
   postsList.innerHTML = '';
   if (posts.length) {
     posts.forEach((post, index) => {
@@ -70,137 +78,12 @@ const editPost = postId => {
   postBodyInput.value = selectedPost[0].body;
 };
 
-const removePostRequest = id =>
-  fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
-    method: 'DELETE',
-  });
+// const removePostRequest = id =>
+//   fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+//     method: 'DELETE',
+//   });
 
-const deletePost = postId => {
-  const selectedPost = state.posts.filter(
-    currentPost => currentPost.id === postId
-  );
-  selectedPost[0] = state.editPost;
-  removePostRequest(state.editPost.id);
-  state.posts.splice(state.editPost.id, 1);
-  fillPostsList(state.posts);
-};
-
-postTitleInput.addEventListener('change', e => {
-  if (postTitleInput.value !== '') {
-    state.editPost.title = e.target.value;
-  }
-
-  state.newPost.title = e.target.value;
-});
-
-postBodyInput.addEventListener('change', e => {
-  if (postBodyInput.value !== '') {
-    state.editPost.body = e.target.value;
-  }
-
-  state.newPost.body = e.target.value;
-});
-
-const createPostRequest = () =>
-  fetch('https://jsonplaceholder.typicode.com/posts', {
-    method: 'POST',
-    body: JSON.stringify(state.newPost),
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
-  })
-    .then(res => res.json())
-    .then(post => state.posts.push(post));
-
-createPostBtn.addEventListener('click', async () => {
-  if (postTitleInput.value === '') {
-    postTitleInput.classList.add('error');
-  }
-
-  if (postBodyInput.value === '') {
-    postBodyInput.classList.add('error');
-  }
-
-  if (postTitleInput.value !== '') {
-    postTitleInput.classList.remove('error');
-  }
-
-  if (postBodyInput.value !== '') {
-    postBodyInput.classList.remove('error');
-  }
-
-  if (postTitleInput.value !== '' && postBodyInput.value !== '') {
-    modalWindow.classList.remove('visible');
-    modalInner.classList.remove('visible');
-    updatePostBtn.classList.remove('display-none');
-    createPostBtn.classList.remove('display-inline-block');
-    await createPostRequest();
-    cleanData();
-  }
-
-  fillPostsList(state.posts);
-});
-
-const updatePostRequest = () =>
-  // console.log(state.editPost);
-  // return;
-  fetch(`https://jsonplaceholder.typicode.com/posts/${state.editPost.id}`, {
-    method: 'PATCH',
-    body: JSON.stringify(state.editPost),
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
-  })
-    .then(res => res.json())
-    .then(data => data);
-
-updatePostBtn.addEventListener('click', async () => {
-  //   console.log('update-btn clicking');
-
-  if (postTitleInput.value === '') {
-    postTitleInput.classList.add('error');
-  }
-
-  if (postBodyInput.value === '') {
-    postBodyInput.classList.add('error');
-  }
-
-  if (postTitleInput.value !== '') {
-    postTitleInput.classList.remove('error');
-  }
-
-  if (postBodyInput.value !== '') {
-    postBodyInput.classList.remove('error');
-  }
-
-  if (postTitleInput.value !== '' && postBodyInput.value !== '') {
-    await updatePostRequest();
-    cleanData();
-    modalWindow.classList.remove('visible');
-    modalInner.classList.remove('visible');
-    updatePostBtn.classList.remove('display-none');
-    createPostBtn.classList.remove('display-inline-block');
-  }
-
-  fillPostsList(state.posts);
-});
-
-const getPostsRequest = () =>
-  fetch('https://jsonplaceholder.typicode.com/posts?_limit=4', {
-    method: 'GET',
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
-  })
-    .then(res => res.json())
-    .then(posts => {
-      state.posts = state.posts.concat(posts);
-    });
-
-document.addEventListener('DOMContentLoaded', async () => {
-  await getPostsRequest();
-  fillPostsList(state.posts);
-
+const updateEventListeners = () => {
   const editBtns = document.querySelectorAll('.buttons__edit');
   editBtns.forEach(elem => {
     elem.addEventListener('click', e => {
@@ -208,37 +91,140 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!postId) {
         return;
       }
-      const openModalWindow = () => {
-        modalWindow.classList.add('visible');
-        modalInner.classList.add('visible');
-        updatePostBtn.classList.add('display-inline-block');
-        createPostBtn.classList.add('display-none');
-      };
-      openModalWindow();
-
+      modalModule.openModalWindowPost(false);
       editPost(postId);
     });
   });
 
   const deleteBtns = document.querySelectorAll('.buttons__delete');
-  const delModal = document.querySelector('.modal-delete');
-
   deleteBtns.forEach(elem => {
     elem.addEventListener('click', e => {
       delModal.classList.add('visible');
-
       const postId = Number(e.target.getAttribute('data-id'));
-      const agreeBtn = document.querySelector('.modal-delete__agree');
-      const disAgreeBtn = document.querySelector('.modal-delete__disagree');
-
       agreeBtn.addEventListener('click', () => {
         deletePost(postId);
         delModal.classList.remove('visible');
       });
-
       disAgreeBtn.addEventListener('click', () => {
         delModal.classList.remove('visible');
       });
     });
   });
+};
+
+const deletePost = postId => {
+  const selectedPost = state.posts.findIndex(
+    currentPost => currentPost.id === postId
+  );
+
+  state.posts.splice(selectedPost, 1);
+  removePostRequest(selectedPost);
+
+  fillPostsList(state.posts);
+  updateEventListeners();
+};
+
+postTitleInput.addEventListener('change', e => {
+  if (postTitleInput.value !== '') {
+    state.editPost.title = e.target.value;
+  }
+  state.newPost.title = e.target.value;
+});
+
+postBodyInput.addEventListener('change', e => {
+  if (postBodyInput.value !== '') {
+    state.editPost.body = e.target.value;
+  }
+  state.newPost.body = e.target.value;
+});
+
+// const createPostRequest = () =>
+//   fetch('https://jsonplaceholder.typicode.com/posts', {
+//     method: 'POST',
+//     body: JSON.stringify(state.newPost),
+//     headers: {
+//       'Content-type': 'application/json; charset=UTF-8',
+//     },
+//   })
+//     .then(res => res.json())
+//     .then(post => state.posts.push(post));
+
+createPostBtn.addEventListener('click', async () => {
+  if (postTitleInput.value === '') {
+    postTitleInput.classList.add('error');
+  }
+  if (postBodyInput.value === '') {
+    postBodyInput.classList.add('error');
+  }
+  if (postTitleInput.value !== '') {
+    postTitleInput.classList.remove('error');
+  }
+  if (postBodyInput.value !== '') {
+    postBodyInput.classList.remove('error');
+  }
+
+  if (postTitleInput.value !== '' && postBodyInput.value !== '') {
+    const newPost = await createPostRequest(state.newPost);
+    state.posts.push(newPost);
+    modalModule.closeModalWindowPost();
+    cleanData();
+  }
+
+  fillPostsList(state.posts);
+  updateEventListeners();
+});
+
+// const updatePostRequest = () =>
+//   fetch(`https://jsonplaceholder.typicode.com/posts/${state.editPost.id}`, {
+//     method: 'PATCH',
+//     body: JSON.stringify(state.editPost),
+//     headers: {
+//       'Content-type': 'application/json; charset=UTF-8',
+//     },
+//   })
+//     .then(res => res.json())
+//     .then(data => data);
+
+updatePostBtn.addEventListener('click', async () => {
+  if (postTitleInput.value === '') {
+    postTitleInput.classList.add('error');
+  }
+  if (postBodyInput.value === '') {
+    postBodyInput.classList.add('error');
+  }
+  if (postTitleInput.value !== '') {
+    postTitleInput.classList.remove('error');
+  }
+  if (postBodyInput.value !== '') {
+    postBodyInput.classList.remove('error');
+  }
+  if (postTitleInput.value !== '' && postBodyInput.value !== '') {
+    const updatePost = await updatePostRequest(state.editPost);
+    modalModule.closeModalWindowPost();
+    cleanData();
+  }
+
+  fillPostsList(state.posts);
+  updateEventListeners();
+  cleanData();
+});
+
+// const getPostsRequest = () =>
+//   fetch('https://jsonplaceholder.typicode.com/posts?_limit=4', {
+//     method: 'GET',
+//     headers: {
+//       'Content-type': 'application/json; charset=UTF-8',
+//     },
+//   })
+//     .then(res => res.json())
+//     .then(posts => {
+//       state.posts = state.posts.concat(posts);
+//     });
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const getAllPosts = await getPostsRequest();
+  state.posts.concat(getAllPosts);
+  state.posts = state.posts.concat(getAllPosts);
+  fillPostsList(state.posts);
+  updateEventListeners();
 });

@@ -3,19 +3,20 @@
   top: 0;
   left: 0;
 
+  visibility: hidden;
+
   width: 100%;
   height: 100%;
 
-  visibility: hidden;
   background-color: rgba(0, 0, 0, 0.4);
 
-  &__inner {
+  &__form {
     position: absolute;
     top: 50%;
     right: 0;
     left: 0;
     width: 50%;
-    z-index: 10001;
+    z-index: 100;
 
     display: block;
     margin: 0 auto;
@@ -23,8 +24,6 @@
 
     min-width: 320px;
     max-width: 520px;
-
-    opacity: 1;
 
     transform: translateY(-50%);
     transition: opacity 500ms ease-in;
@@ -36,14 +35,10 @@
     box-shadow: var(--modal-box-shadow);
   }
 
-  &__form {
-    position: relative;
-  }
-
   &__close {
     position: absolute;
-    right: -34px;
-    top: -34px;
+    right: 4px;
+    top: 4px;
     padding: 16px;
 
     @extend %flexCenter;
@@ -127,22 +122,46 @@
     background-color: var(--grey-color);
   }
 
-  &__update {
-    visibility: hidden;
-  }
+  //   &__update {
+  //     visibility: hidden;
+  //   }
 }
 
 .modal-delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
   visibility: hidden;
 
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.4);
+
   &__inner {
-    font-size: 16px;
-    color: var(--white-color);
+    padding: 20px;
+    border: var(--modal-box-border);
+    border-radius: 5px;
+    background-color: var(--modal-box-bcg);
+    background-clip: padding-box;
+    box-shadow: var(--modal-box-shadow);
   }
 
   &__text {
-    font-size: 18px;
     margin-bottom: 20px;
+    font-size: 18px;
+    color: var(--white-color);
+  }
+
+  &__buttons-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &__agree,
@@ -182,4 +201,17 @@
 
 .display-inline-block {
   display: inline-block;
+}
+
+.create {
+  .create-post-btn {
+    display: inline-block;
+  }
+  .update-post-btn {
+    display: none;
+  }
+}
+
+.create-post-btn {
+  display: none;
 }
