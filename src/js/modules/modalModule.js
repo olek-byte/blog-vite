@@ -2,24 +2,33 @@
 export const modalModule = (() => {
   const addPostBtn = document.querySelector('.add-post-btn');
   const modalWindow = document.querySelector('.modal');
-  const modalInner = document.querySelector('.modal__inner');
   const preloader = document.querySelector('.preloader');
   const closeModalBtn = document.querySelector('.modal__close');
   const createPostBtn = document.querySelector('.create-post-btn');
   const updatePostBtn = document.querySelector('.update-post-btn');
 
+  const postTitleInput = document.querySelector('.new-post__title');
+  const postBodyInput = document.querySelector('.new-post__body');
+
+  const openModalWindowPost = isCreate => {
+    modalWindow.classList.add('visible');
+    if (isCreate) {
+      modalWindow.classList.add('create');
+    }
+  };
+
+  const closeModalWindowPost = () => {
+    modalWindow.classList.remove('visible');
+    modalWindow.classList.remove('create');
+    postTitleInput.classList.remove('error');
+    postBodyInput.classList.remove('error');
+  };
+
   const eventHandler = () => {
     // Modal opening
     addPostBtn.addEventListener('click', e => {
       e.preventDefault();
-      const openModalWIndow = () => {
-        modalWindow.classList.add('visible');
-        modalInner.classList.add('visible');
-      };
-
-      updatePostBtn.classList.add('display-none');
-      createPostBtn.classList.add('display-inline-block');
-      openModalWIndow();
+      openModalWindowPost(true);
     });
 
     createPostBtn.addEventListener('click', e => {
@@ -38,24 +47,14 @@ export const modalModule = (() => {
     // Modal window Close Esc
     document.onkeydown = e => {
       if (e.keyCode === 27) {
-        modalWindow.classList.remove('visible');
-        modalInner.classList.remove('visible');
-        updatePostBtn.classList.remove('display-none');
-        createPostBtn.classList.remove('display-inline-block');
+        closeModalWindowPost();
       }
     };
 
     // Modal window Close Btn
     closeModalBtn.addEventListener('click', e => {
       e.preventDefault();
-
-      const closeModalWIndow = () => {
-        modalWindow.classList.remove('visible');
-        modalInner.classList.remove('visible');
-        updatePostBtn.classList.remove('display-none');
-        createPostBtn.classList.remove('display-inline-block');
-      };
-      closeModalWIndow();
+      closeModalWindowPost();
     });
   };
 
@@ -65,5 +64,9 @@ export const modalModule = (() => {
 
   return {
     init,
+    openModalWindowPost,
+    closeModalWindowPost,
   };
 })();
+
+// modalModule.openModalWindowPost(false);
