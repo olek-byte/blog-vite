@@ -10,6 +10,8 @@ export const modalModule = (() => {
   const postTitleInput = document.querySelector('.new-post__title');
   const postBodyInput = document.querySelector('.new-post__body');
 
+  const delModal = document.querySelector('.modal-delete');
+
   const openModalWindowPost = isCreate => {
     modalWindow.classList.add('visible');
     if (isCreate) {
@@ -22,6 +24,14 @@ export const modalModule = (() => {
     modalWindow.classList.remove('create');
     postTitleInput.classList.remove('error');
     postBodyInput.classList.remove('error');
+  };
+
+  const openDelModal = () => {
+    delModal.classList.add('visible');
+  };
+
+  const closeDelModal = () => {
+    delModal.classList.remove('visible');
   };
 
   const eventHandler = () => {
@@ -66,6 +76,8 @@ export const modalModule = (() => {
     init,
     openModalWindowPost,
     closeModalWindowPost,
+    openDelModal,
+    closeDelModal,
   };
 })();
 
