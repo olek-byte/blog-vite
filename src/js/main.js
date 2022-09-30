@@ -17,7 +17,6 @@ const createPostBtn = document.querySelector('.create-post-btn');
 const updatePostBtn = document.querySelector('.update-post-btn');
 
 const main = document.querySelector('.main');
-const delModal = document.querySelector('.modal-delete');
 const agreeBtn = document.querySelector('.modal-delete__agree');
 const disAgreeBtn = document.querySelector('.modal-delete__disagree');
 
@@ -99,26 +98,43 @@ const updateEventListeners = () => {
   const deleteBtns = document.querySelectorAll('.buttons__delete');
   deleteBtns.forEach(elem => {
     elem.addEventListener('click', e => {
-      delModal.classList.add('visible');
-      const postId = Number(e.target.getAttribute('data-id'));
+      modalModule.openDelModal();
       agreeBtn.addEventListener('click', () => {
+        const postId = Number(e.target.getAttribute('data-id'));
         deletePost(postId);
-        delModal.classList.remove('visible');
+        modalModule.closeDelModal();
       });
       disAgreeBtn.addEventListener('click', () => {
-        delModal.classList.remove('visible');
+        const postId = Number(e.target.removeAttribute('data-id'));
+        modalModule.closeDelModal(postId);
       });
     });
   });
 };
 
+// const deletePost = postId => {
+//   const selectedPost = state.posts.findIndex(
+//     currentPost => currentPost.id === postId
+//   );
+
+//   state.posts.splice(selectedPost, 1);
+//   removePostRequest(selectedPost);
+
+//   fillPostsList(state.posts);
+//   updateEventListeners();
+// };
+
 const deletePost = postId => {
-  const selectedPost = state.posts.findIndex(
+  const currentPostIndex = state.posts.findIndex(
     currentPost => currentPost.id === postId
   );
 
-  state.posts.splice(selectedPost, 1);
-  removePostRequest(selectedPost);
+  if (currentPostIndex === -1) {
+    return;
+  }
+
+  state.posts.splice(currentPostIndex, 1);
+  removePostRequest(currentPostIndex);
 
   fillPostsList(state.posts);
   updateEventListeners();
