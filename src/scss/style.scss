@@ -1,8 +1,9 @@
-@import "reset";
-@import "global";
-@import "variables";
+@import 'reset';
+@import 'global';
+@import 'variables';
 
 /* Components import */
-@import "components/modal";
-@import "components/header";
-@import "components/blog-card";
+@import 'components/modal';
+@import 'components/header';
+@import 'components/blog-card';
+@import 'components/preloader';

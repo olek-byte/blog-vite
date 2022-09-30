@@ -2,14 +2,11 @@
 export const modalModule = (() => {
   const addPostBtn = document.querySelector('.add-post-btn');
   const modalWindow = document.querySelector('.modal');
-  const preloader = document.querySelector('.preloader');
   const closeModalBtn = document.querySelector('.modal__close');
   const createPostBtn = document.querySelector('.create-post-btn');
   const updatePostBtn = document.querySelector('.update-post-btn');
-
   const postTitleInput = document.querySelector('.new-post__title');
   const postBodyInput = document.querySelector('.new-post__body');
-
   const delModal = document.querySelector('.modal-delete');
 
   const openModalWindowPost = isCreate => {
@@ -35,7 +32,6 @@ export const modalModule = (() => {
   };
 
   const eventHandler = () => {
-    // Modal opening
     addPostBtn.addEventListener('click', e => {
       e.preventDefault();
       openModalWindowPost(true);
@@ -49,19 +45,12 @@ export const modalModule = (() => {
       e.preventDefault();
     });
 
-    // PRELOADER
-    window.onload = () => {
-      preloader.classList.add('display-none');
-    };
-
-    // Modal window Close Esc
     document.onkeydown = e => {
       if (e.keyCode === 27) {
         closeModalWindowPost();
       }
     };
 
-    // Modal window Close Btn
     closeModalBtn.addEventListener('click', e => {
       e.preventDefault();
       closeModalWindowPost();
@@ -80,5 +69,3 @@ export const modalModule = (() => {
     closeDelModal,
   };
 })();
-
-// modalModule.openModalWindowPost(false);
