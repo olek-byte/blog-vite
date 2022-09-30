@@ -25,7 +25,7 @@ export const createPostRequest = params =>
   }).then(res => res.json());
 
 export const getPostsRequest = () =>
-  fetch(`${requestURL}/posts?_limit=10`, {
+  fetch(`${requestURL}/posts?_limit=5`, {
     method: 'GET',
     headers: {
       'Content-type': 'application/json; charset=UTF-8',

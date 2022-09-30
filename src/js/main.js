@@ -1,4 +1,6 @@
 import { modalModule } from './modules/modalModule';
+import { preloadModule } from './modules/preloadModule';
+
 import {
   removePostRequest,
   updatePostRequest,
@@ -7,18 +9,18 @@ import {
 } from './api/posts';
 
 modalModule.init();
+preloadModule.init();
 
 const postsList = document.querySelector('.posts__list');
-
 const postTitleInput = document.querySelector('.new-post__title');
 const postBodyInput = document.querySelector('.new-post__body');
-
 const createPostBtn = document.querySelector('.create-post-btn');
 const updatePostBtn = document.querySelector('.update-post-btn');
-
 const main = document.querySelector('.main');
 const agreeBtn = document.querySelector('.modal-delete__agree');
 const disAgreeBtn = document.querySelector('.modal-delete__disagree');
+const preloader = document.querySelector('.preloader');
+let postId = null;
 
 const state = {
   posts: [],
@@ -32,10 +34,8 @@ const state = {
 const cleanData = () => {
   state.newPost.title = '';
   state.newPost.body = '';
-
   postTitleInput.value = '';
   postBodyInput.value = '';
-
   state.editPost = {};
 };
 
@@ -68,7 +68,7 @@ const fillPostsList = posts => {
   }
 };
 
-const editPost = postId => {
+const editPost = () => {
   const selectedPost = state.posts.filter(
     currentPost => currentPost.id === postId
   );
@@ -77,16 +77,11 @@ const editPost = postId => {
   postBodyInput.value = selectedPost[0].body;
 };
 
-// const removePostRequest = id =>
-//   fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
-//     method: 'DELETE',
-//   });
-
 const updateEventListeners = () => {
   const editBtns = document.querySelectorAll('.buttons__edit');
   editBtns.forEach(elem => {
     elem.addEventListener('click', e => {
-      const postId = Number(e.target.getAttribute('data-id'));
+      postId = Number(e.target.getAttribute('data-id'));
       if (!postId) {
         return;
       }
@@ -99,46 +94,35 @@ const updateEventListeners = () => {
   deleteBtns.forEach(elem => {
     elem.addEventListener('click', e => {
       modalModule.openDelModal();
-      agreeBtn.addEventListener('click', () => {
-        const postId = Number(e.target.getAttribute('data-id'));
-        deletePost(postId);
-        modalModule.closeDelModal();
-      });
-      disAgreeBtn.addEventListener('click', () => {
-        const postId = Number(e.target.removeAttribute('data-id'));
-        modalModule.closeDelModal(postId);
-      });
+      postId = Number(e.target.getAttribute('data-id'));
     });
   });
 };
 
-// const deletePost = postId => {
-//   const selectedPost = state.posts.findIndex(
-//     currentPost => currentPost.id === postId
-//   );
-
-//   state.posts.splice(selectedPost, 1);
-//   removePostRequest(selectedPost);
-
-//   fillPostsList(state.posts);
-//   updateEventListeners();
-// };
-
-const deletePost = postId => {
+const deletePost = () => {
   const currentPostIndex = state.posts.findIndex(
     currentPost => currentPost.id === postId
   );
-
   if (currentPostIndex === -1) {
     return;
   }
-
   state.posts.splice(currentPostIndex, 1);
   removePostRequest(currentPostIndex);
-
   fillPostsList(state.posts);
   updateEventListeners();
 };
+
+agreeBtn.addEventListener('click', () => {
+  preloader.classList.add('display-flex');
+  deletePost(postId);
+  modalModule.closeDelModal();
+  preloadModule.preloaderTime();
+});
+
+disAgreeBtn.addEventListener('click', () => {
+  modalModule.closeDelModal();
+  postId = null;
+});
 
 postTitleInput.addEventListener('change', e => {
   if (postTitleInput.value !== '') {
@@ -154,17 +138,6 @@ postBodyInput.addEventListener('change', e => {
   state.newPost.body = e.target.value;
 });
 
-// const createPostRequest = () =>
-//   fetch('https://jsonplaceholder.typicode.com/posts', {
-//     method: 'POST',
-//     body: JSON.stringify(state.newPost),
-//     headers: {
-//       'Content-type': 'application/json; charset=UTF-8',
-//     },
-//   })
-//     .then(res => res.json())
-//     .then(post => state.posts.push(post));
-
 createPostBtn.addEventListener('click', async () => {
   if (postTitleInput.value === '') {
     postTitleInput.classList.add('error');
@@ -178,28 +151,17 @@ createPostBtn.addEventListener('click', async () => {
   if (postBodyInput.value !== '') {
     postBodyInput.classList.remove('error');
   }
-
   if (postTitleInput.value !== '' && postBodyInput.value !== '') {
+    preloader.classList.add('display-flex');
     const newPost = await createPostRequest(state.newPost);
     state.posts.push(newPost);
     modalModule.closeModalWindowPost();
     cleanData();
+    preloadModule.preloaderTime();
   }
-
   fillPostsList(state.posts);
   updateEventListeners();
 });
-
-// const updatePostRequest = () =>
-//   fetch(`https://jsonplaceholder.typicode.com/posts/${state.editPost.id}`, {
-//     method: 'PATCH',
-//     body: JSON.stringify(state.editPost),
-//     headers: {
-//       'Content-type': 'application/json; charset=UTF-8',
-//     },
-//   })
-//     .then(res => res.json())
-//     .then(data => data);
 
 updatePostBtn.addEventListener('click', async () => {
   if (postTitleInput.value === '') {
@@ -215,27 +177,16 @@ updatePostBtn.addEventListener('click', async () => {
     postBodyInput.classList.remove('error');
   }
   if (postTitleInput.value !== '' && postBodyInput.value !== '') {
-    const updatePost = await updatePostRequest(state.editPost);
+    preloader.classList.add('display-flex');
+    await updatePostRequest(state.editPost);
     modalModule.closeModalWindowPost();
     cleanData();
+    preloadModule.preloaderTime();
   }
-
   fillPostsList(state.posts);
   updateEventListeners();
   cleanData();
 });
-
-// const getPostsRequest = () =>
-//   fetch('https://jsonplaceholder.typicode.com/posts?_limit=4', {
-//     method: 'GET',
-//     headers: {
-//       'Content-type': 'application/json; charset=UTF-8',
-//     },
-//   })
-//     .then(res => res.json())
-//     .then(posts => {
-//       state.posts = state.posts.concat(posts);
-//     });
 
 document.addEventListener('DOMContentLoaded', async () => {
   const getAllPosts = await getPostsRequest();
@@ -243,4 +194,5 @@ document.addEventListener('DOMContentLoaded', async () => {
   state.posts = state.posts.concat(getAllPosts);
   fillPostsList(state.posts);
   updateEventListeners();
+  preloadModule.preloaderTime();
 });

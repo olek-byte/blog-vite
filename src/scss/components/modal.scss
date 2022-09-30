@@ -2,12 +2,9 @@
   position: fixed;
   top: 0;
   left: 0;
-
-  visibility: hidden;
-
   width: 100%;
   height: 100%;
-
+  visibility: hidden;
   background-color: rgba(0, 0, 0, 0.4);
 
   &__form {
@@ -17,17 +14,13 @@
     left: 0;
     width: 50%;
     z-index: 100;
-
     display: block;
     margin: 0 auto;
     padding: 40px 40px 30px 40px;
-
     min-width: 320px;
     max-width: 520px;
-
     transform: translateY(-50%);
     transition: opacity 500ms ease-in;
-
     border: var(--modal-box-border);
     border-radius: 5px;
     background-color: var(--modal-box-bcg);
@@ -40,14 +33,11 @@
     right: 4px;
     top: 4px;
     padding: 16px;
-
     @extend %flexCenter;
     width: 22px;
     height: 22px;
-
     font-weight: 700;
     color: var(--white-color);
-
     border-radius: 50%;
   }
 
@@ -61,10 +51,8 @@
     display: block;
     margin-bottom: 20px;
     padding: 0 20px;
-
     font-size: 18px;
     border-radius: 4px;
-
     color: var(--white-color);
     background-clip: padding-box;
     background-color: var(--modal-input-bcg);
@@ -95,13 +83,10 @@
   &__btn {
     display: inline-block;
     padding: 10px 40px;
-
     text-transform: uppercase;
     font-weight: 700;
-
     border-radius: 4px;
     border: var(--border-line);
-
     background-color: var(--modal-btn-bcg);
     box-shadow: var(--modal-btn-shadow);
     color: var(--modal-btn-text);
@@ -121,26 +106,18 @@
     color: var(--white-color);
     background-color: var(--grey-color);
   }
-
-  //   &__update {
-  //     visibility: hidden;
-  //   }
 }
 
 .modal-delete {
   display: flex;
   justify-content: center;
   align-items: center;
-
   position: fixed;
   top: 0;
   left: 0;
-
   visibility: hidden;
-
   width: 100%;
   height: 100%;
-
   background-color: rgba(0, 0, 0, 0.4);
 
   &__inner {
@@ -193,10 +170,6 @@
 .hidden {
   visibility: hidden;
   opacity: 0;
-}
-
-.display-none {
-  display: none;
 }
 
 .display-inline-block {
