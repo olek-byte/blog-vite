@@ -1,0 +1,59 @@
+.modal-delete {
+  @extend %flexCenter;
+  position: fixed;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+
+  &__inner {
+    padding: 20px;
+    margin: 0 20px;
+    border: var(--modal-box-border);
+    border-radius: 5px;
+    background-color: var(--modal-box-bcg);
+    background-clip: padding-box;
+    box-shadow: var(--modal-box-shadow);
+  }
+
+  &__text {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 18px;
+    color: var(--white-color);
+  }
+
+  &__buttons-box {
+    @extend %flexCenter;
+  }
+
+  &__agree,
+  &__disagree {
+    padding: 10px 15px;
+    font-weight: 700;
+    border: 1px solid var(--black-color);
+    border-radius: 5px;
+    background-color: var(--grey-color);
+
+    &:hover {
+      color: var(--white-color);
+      background-color: var(--modal-btn-hover-bcg);
+    }
+  }
+
+  &__agree {
+    margin-right: 15px;
+  }
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}

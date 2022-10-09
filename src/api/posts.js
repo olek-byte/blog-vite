@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 const requestURL = 'https://jsonplaceholder.typicode.com';
 
 export const removePostRequest = id =>

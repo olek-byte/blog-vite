@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const modalModule = (() => {
   const addPostBtn = document.querySelector('.add-post-btn');
   const modalWindow = document.querySelector('.modal');
@@ -7,7 +6,6 @@ export const modalModule = (() => {
   const updatePostBtn = document.querySelector('.update-post-btn');
   const postTitleInput = document.querySelector('.new-post__title');
   const postBodyInput = document.querySelector('.new-post__body');
-  const delModal = document.querySelector('.modal-delete');
 
   const openModalWindowPost = isCreate => {
     modalWindow.classList.add('visible');
@@ -23,15 +21,7 @@ export const modalModule = (() => {
     postBodyInput.classList.remove('error');
   };
 
-  const openDelModal = () => {
-    delModal.classList.add('visible');
-  };
-
-  const closeDelModal = () => {
-    delModal.classList.remove('visible');
-  };
-
-  const eventHandler = () => {
+  const init = () => {
     addPostBtn.addEventListener('click', e => {
       e.preventDefault();
       openModalWindowPost(true);
@@ -57,15 +47,9 @@ export const modalModule = (() => {
     });
   };
 
-  const init = () => {
-    eventHandler();
-  };
-
   return {
     init,
     openModalWindowPost,
     closeModalWindowPost,
-    openDelModal,
-    closeDelModal,
   };
 })();
