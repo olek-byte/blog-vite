@@ -6,10 +6,9 @@
     background-color: var(--grey-color);
     border: 1px solid var(--black-color);
     transition: all 500ms;
-  }
-
-  &__btn:hover {
-    color: var(--white-color);
-    background-color: var(--blue-color);
+    &:hover {
+      color: var(--white-color);
+      background-color: var(--blue-color);
+    }
   }
 }

@@ -37,7 +37,6 @@ small,
 strong,
 sub,
 sup,
-var,
 b,
 i,
 dl,
@@ -106,19 +105,6 @@ nav ul {
   list-style: none;
 }
 
-blockquote,
-q {
-  quotes: none;
-}
-
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-  content: '';
-  content: none;
-}
-
 a {
   margin: 0;
   padding: 0;
@@ -130,39 +116,9 @@ a {
   background: transparent;
 }
 
-/* change colours to suit your needs */
-ins {
-  text-decoration: none;
-}
-
-/* change colours to suit your needs */
-mark {
-  font-style: italic;
-  font-weight: bold;
-}
-
-del {
-  text-decoration: line-through;
-}
-
-abbr[title],
-dfn[title] {
-  border-bottom: 1px dotted;
-  cursor: help;
-}
-
 table {
   border-collapse: collapse;
   border-spacing: 0;
-}
-
-/* change border colour to suit your needs */
-hr {
-  display: block;
-  height: 1px;
-  border: 0;
-  margin: 1em 0;
-  padding: 0;
 }
 
 input,
