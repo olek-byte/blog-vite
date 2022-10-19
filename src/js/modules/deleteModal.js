@@ -1,21 +1,19 @@
 export const deleteModal = (() => {
   const delModal = document.querySelector('.modal-delete');
+  const VISIBLE_CLASS = 'visible';
 
   const openDelModal = () => {
-    delModal.classList.add('visible');
+    delModal.classList.add(VISIBLE_CLASS);
   };
 
   const closeDelModal = () => {
-    delModal.classList.remove('visible');
+    delModal.classList.remove(VISIBLE_CLASS);
   };
 
-  const init = () => {
-    openDelModal();
-    closeDelModal();
-  };
+  openDelModal();
+  closeDelModal();
 
   return {
-    init,
     openDelModal,
     closeDelModal,
   };

@@ -105,21 +105,15 @@
       background-color: var(--grey-color);
     }
   }
-}
-
-.display-inline-block {
-  display: inline-block;
-}
-
-.create {
-  .create-post-btn {
-    display: inline-block;
-  }
-  .update-post-btn {
+  &__create-btn {
     display: none;
   }
-}
-
-.create-post-btn {
-  display: none;
+  &__create {
+    .modal__create-btn {
+      display: inline-block;
+    }
+    .modal__update-btn {
+      display: none;
+    }
+  }
 }
