@@ -8,6 +8,7 @@ import {
 import { deleteModal } from './deleteModal';
 import { modalModule } from './modalModule';
 import { preloadModule } from './preloadModule';
+import { validateModule } from './validateModule';
 
 preloadModule.togglePreloader();
 
@@ -15,11 +16,12 @@ export const postManagement = (() => {
   const postsList = document.querySelector('.posts__list');
   const postTitleInput = document.querySelector('.new-post__title');
   const postBodyInput = document.querySelector('.new-post__body');
-  const createPostBtn = document.querySelector('.create-post-btn');
-  const updatePostBtn = document.querySelector('.update-post-btn');
+  const createPostBtn = document.querySelector('.modal__create-btn');
+  const updatePostBtn = document.querySelector('.modal__update-btn');
   const main = document.querySelector('.main');
   const agreeBtn = document.querySelector('.modal-delete__agree');
   const disAgreeBtn = document.querySelector('.modal-delete__disagree');
+
   let postId = null;
 
   const state = {
@@ -74,7 +76,7 @@ export const postManagement = (() => {
       const selectedPost = state.posts.filter(
         currentPost => currentPost.id === postId
       );
-      state.editPost = Object.assign(selectedPost[0], state.editPost);
+      state.editPost = Object.assign(selectedPost[0]);
       postTitleInput.value = selectedPost[0].title;
       postBodyInput.value = selectedPost[0].body;
     };
@@ -140,51 +142,31 @@ export const postManagement = (() => {
       state.newPost.body = e.target.value;
     });
 
-    const validate = () => {
-      if (postTitleInput.value === '') {
-        postTitleInput.classList.add('error');
-      }
-      if (postBodyInput.value === '') {
-        postBodyInput.classList.add('error');
-      }
-      if (postTitleInput.value !== '') {
-        postTitleInput.classList.remove('error');
-      }
-      if (postBodyInput.value !== '') {
-        postBodyInput.classList.remove('error');
-      }
-      return true;
-    };
-
     createPostBtn.addEventListener('click', async () => {
-      if (validate()) {
-        if (postTitleInput.value !== '' && postBodyInput.value !== '') {
-          preloadModule.togglePreloader();
-          const newPost = await createPostRequest(state.newPost);
-          state.posts.push(newPost);
-          modalModule.closeModalWindowPost();
-          cleanData();
-          preloadModule.togglePreloader();
-        }
-      } else {
+      if (!validateModule.validate()) {
         return;
       }
+      preloadModule.togglePreloader();
+      const newPost = await createPostRequest(state.newPost);
+      state.posts.push(newPost);
+      modalModule.closeModalWindowPost();
+      cleanData();
+      preloadModule.togglePreloader();
+
       fillPostsList(state.posts);
       updateEventListeners();
     });
 
     updatePostBtn.addEventListener('click', async () => {
-      if (validate()) {
-        if (postTitleInput.value !== '' && postBodyInput.value !== '') {
-          preloadModule.togglePreloader();
-          await updatePostRequest(state.editPost);
-          modalModule.closeModalWindowPost();
-          cleanData();
-          preloadModule.togglePreloader();
-        }
-      } else {
+      if (!validateModule.validate()) {
         return;
       }
+      preloadModule.togglePreloader();
+      await updatePostRequest(state.editPost);
+      modalModule.closeModalWindowPost();
+      cleanData();
+      preloadModule.togglePreloader();
+
       fillPostsList(state.posts);
       updateEventListeners();
     });
@@ -199,6 +181,7 @@ export const postManagement = (() => {
   };
 
   return {
+    cleanData,
     init,
   };
 })();
