@@ -1,4 +1,3 @@
-import { postManagement } from './postManagement';
 import { deleteModal } from './deleteModal';
 
 export const modalModule = (() => {
@@ -14,9 +13,9 @@ export const modalModule = (() => {
   const ERROR_CLASS = 'error';
 
   const openModalWindowPost = isCreate => {
-    modalWindow.classList.add(VISIBLE_CLASS);
     postTitleInput.classList.remove(ERROR_CLASS);
     postBodyInput.classList.remove(ERROR_CLASS);
+    modalWindow.classList.add(VISIBLE_CLASS);
     if (isCreate) {
       modalWindow.classList.add(CREATE_CLASS);
     }
@@ -27,7 +26,8 @@ export const modalModule = (() => {
     modalWindow.classList.remove(CREATE_CLASS);
     postTitleInput.classList.remove(ERROR_CLASS);
     postBodyInput.classList.remove(ERROR_CLASS);
-    postManagement.cleanData();
+    postTitleInput.value = '';
+    postBodyInput.value = '';
   };
 
   addPostBtn.addEventListener('click', e => {
