@@ -15,6 +15,13 @@
   "rules": {
     "no-underscore-dangle": "off",
     "import/prefer-default-export": "off",
+    "import/no-cycle": [
+      "error",
+      {
+        "maxDepth": 10,
+        "ignoreExternal": true
+      }
+    ],
     "func-names": [
       "warn",
       "as-needed"
